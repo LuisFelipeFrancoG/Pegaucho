@@ -1,0 +1,6 @@
+@Pegaucho.Back_HostAddress = http://localhost:5268
+
+GET {{Pegaucho.Back_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
