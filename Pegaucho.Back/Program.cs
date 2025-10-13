@@ -1,4 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Pegaucho.Back.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,7 @@ builder.Services.AddControllers();
 // Inyecciones de dependencias
 
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<DataContext>(x =>x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 

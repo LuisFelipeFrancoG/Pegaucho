@@ -9,27 +9,27 @@ namespace Pegaucho.Shared.Entities
 {
     public class ProductoInventario
     {
-        private int Id  { get; set; }
+        public int Id  { get; set; }
 
         [Display(Name = "Nombre del Producto")]
         [Required]
         [MaxLength(50)]
-        private string Nombre { get; set; }
+        public string Nombre { get; set; }
 
         [Display(Name = "Descripcion del Producto")]
         [Required]
         [MaxLength(200)]
-        private string Descripcion { get; set; }
+        public string Descripcion { get; set; }
 
         [Display(Name = "Unidad de Medida del Producto")]
         [Required]
         [MaxLength(20)]
-        private string UnidadMedida { get; set; }
+        public string UnidadMedida { get; set; }
 
         [Display(Name = "Costo Unitario del Producto")]
         [Required]
         [MaxLength(100)]
-        private double CostoUnitario { get; set; }
+        public double CostoUnitario { get; set; }
 
 }
 }
