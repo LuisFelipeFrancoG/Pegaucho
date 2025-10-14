@@ -17,12 +17,12 @@
 }
 else
 {
-    <ProductoInventarioForm @ref="ProductoInventario" ProductoInventario="ProductoInventario" OnSubmit="Edit" ReturnAction="Return" />
+    <ProductoInventarioForm @ref="productoInventarioForm" ProductoInventario="ProductoInventario" OnSubmit="Edit" ReturnAction="Return" />
 }
 
 @code {
     private ProductoInventario ProductoInventario;
-    private ProductoInventarioForm ProductoInventarioForm;
+    private ProductoInventarioForm productoInventarioForm;
 
     [Parameter]
     public int Id { get; set; }
@@ -35,7 +35,7 @@ else
         {
             if (responseHTTP.HttpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
-                navigationManager.NavigateTo("productoinventario");
+                navigationManager.NavigateTo("/productoinventario");
             }
             else
             {
