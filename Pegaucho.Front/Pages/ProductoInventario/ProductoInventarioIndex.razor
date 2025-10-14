@@ -35,7 +35,7 @@ else
                 <div class="card-header">
                     <span>
                         <i class="oi oi-globe"></i> ProductoInventarios
-                        <a class="btn btn-sm btn-primary float-end" href="/ProductoInventarios/create"><i class="oi oi-plus"></i> Crear ProductoInventario</a>
+                        <a class="btn btn-sm btn-primary float-end" href="/productoInventario/create"><i class="oi oi-plus"></i> Crear ProductoInventario</a>
                     </span>
                 </div>
                 <div class="card-body">
@@ -73,7 +73,7 @@ else
                                 @productoInventario.UnidadMedida
                             </td>
 
-                            td>
+                            <td>
                             @productoInventario.CostoUnitario
                             </td>
 
@@ -132,7 +132,7 @@ else
             return;
         }
 
-        var responseHTTP = await repository.DeleteAsync($"api/productoinventario/{ProductoInventario.Id}");
+        var responseHTTP = await repository.DeleteAsync($"/api/productoinventario/{ProductoInventario.Id}");
 
         if (responseHTTP.Error)
         {
