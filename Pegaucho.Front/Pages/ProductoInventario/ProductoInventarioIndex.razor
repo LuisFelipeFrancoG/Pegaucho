@@ -1,0 +1,154 @@
+﻿@page "/pegaucho"
+@using CurrieTechnologies.Razor.SweetAlert2
+@using Pegaucho.Shared.Entities
+@using Pegaucho.Front.Repositories
+@using Pegaucho.Front.Shared
+@using Microsoft.AspNetCore.Authorization;
+
+@attribute [Authorize(Roles = "Admin")]
+
+
+@inject IRepository repository
+@inject NavigationManager navigationManager
+@inject SweetAlertService swal
+
+
+
+<h1>ProductoInventarioIndex</h1>
+
+@if (ProductoInventarios is null)
+{
+    <div class="spinner" />
+}
+else
+{
+
+
+
+
+
+    <GenericList MyList="ProductoInventarios">
+
+        <Body>
+
+            <div class="card">
+                <div class="card-header">
+                    <span>
+                        <i class="oi oi-globe"></i> ProductoInventarios
+                        <a class="btn btn-sm btn-primary float-end" href="/ProductoInventarios/create"><i class="oi oi-plus"></i> Crear ProductoInventario</a>
+                    </span>
+                </div>
+                <div class="card-body">
+                    <div class="mb-2" style="display: flex; flex-wrap:wrap; align-items: center;">
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ProductoInventario</th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var productoInventario in ProductoInventarios!)
+                    {
+                        <tr>
+
+                            <td>
+                                @productoInventario.Id
+                            </td>
+                            <td>
+                                @productoInventario.Nombre
+                            </td>
+
+
+                            <td>
+                                @productoInventario.Descripcion
+                            </td>
+
+
+                            <td>
+                                @productoInventario.UnidadMedida
+                            </td>
+
+                            td>
+                            @productoInventario.CostoUnitario
+                            </td>
+
+
+                            <td>
+                                <a href="/ProductoInventarios/edit/@productoInventario.Id" class="btn btn-warning btn-sm"><i class="oi oi-pencil" /> Editar</a>
+                                <button class="btn btn-danger btn-sm" @onclick=@(() => DeleteAsync(productoInventario))><i class="oi oi-trash" /> Borrar</button>
+
+
+                            </td>
+
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </Body>
+
+    </GenericList>
+}
+
+
+
+
+@code {
+
+
+    public List<ProductoInventario> ProductoInventarios { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        await Load();
+    }
+
+    private async Task Load()
+    {
+        var responseHppt = await repository.GetAsync<List<ProductoInventario>>("/api/productoinventario");
+        ProductoInventarios = responseHppt.Response!;
+    }
+
+    private async Task DeleteAsync(ProductoInventario ProductoInventario)
+    {
+        var result = await swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Confirmación",
+                Text = "¿Esta seguro que quieres borrar el registro?",
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true
+            });
+
+        var confirm = string.IsNullOrEmpty(result.Value);
+
+        if (confirm)
+        {
+            return;
+        }
+
+        var responseHTTP = await repository.DeleteAsync($"api/productoinventario/{ProductoInventario.Id}");
+
+        if (responseHTTP.Error)
+        {
+            if (responseHTTP.HttpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                navigationManager.NavigateTo("/");
+            }
+            else
+            {
+                var mensajeError = await responseHTTP.GetErrorMessageAsync();
+                await swal.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
+            }
+        }
+        else
+        {
+            await Load();
+        }
+    }
+}

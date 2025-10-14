@@ -1,0 +1,49 @@
+﻿@using CurrieTechnologies.Razor.SweetAlert2
+@using Pegaucho.Shared.Entities
+@using Pegaucho.Front.Repositories
+
+@page "/productoinventario/create"
+
+@inject IRepository repository
+@inject NavigationManager navigationManager
+@inject SweetAlertService sweetAlertService
+
+
+<h3>ProductoInventario Create</h3>
+
+<ProductoInventarioForm @ref="productoInventarioForm" ProductoInventario="ProductoInventario" OnSubmit="Create" ReturnAction="Return" />
+
+
+@code {
+    public ProductoInventario ProductoInventario = new();
+    public ProductoInventarioForm productoInventarioForm;
+
+
+
+    private async Task Create()
+    {
+
+        var responseHttp = await repository.PostAsync("/api/productoinventario", ProductoInventario);
+        if (responseHttp.Error)
+        {
+
+            var mensaje = await responseHttp.GetErrorMessageAsync();
+            await sweetAlertService.FireAsync("Error", mensaje);
+            return;
+
+
+        }
+        navigationManager.NavigateTo("/productoinventario");
+
+    }
+
+
+
+    private void Return(){
+
+        navigationManager.NavigateTo("/productoinventario");
+
+
+
+    }
+}
