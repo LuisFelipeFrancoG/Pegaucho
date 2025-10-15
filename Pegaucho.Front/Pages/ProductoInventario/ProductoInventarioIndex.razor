@@ -46,7 +46,12 @@ else
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>ProductoInventario</th>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Unidad de medida</th>
+                        <th>Costo unitario</th>
+                        <th>Acciones</th>
 
 
                     </tr>
@@ -79,7 +84,7 @@ else
 
 
                             <td>
-                                <a href="/productoinventarios/edit/@productoInventario.Id" class="btn btn-warning btn-sm"><i class="oi oi-pencil" /> Editar</a>
+                                <a href="/productoinventario/edit/@productoInventario.Id" class="btn btn-warning btn-sm"><i class="oi oi-pencil" /> Editar</a>
                                 <button class="btn btn-danger btn-sm" @onclick=@(() => DeleteAsync(productoInventario))><i class="oi oi-trash" /> Borrar</button>
 
 

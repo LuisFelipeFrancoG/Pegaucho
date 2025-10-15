@@ -14,6 +14,20 @@ builder.Services.AddControllers();
 
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>(x =>x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+const string corsPolicyName = "AllowFrontEnd";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(corsPolicyName, policyBuilder =>
+    {
+        policyBuilder
+            .WithOrigins(
+                "https://localhost:8000",
+                "http://localhost:8000")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
 
@@ -29,6 +43,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(corsPolicyName);
 
 app.UseAuthorization();
 
