@@ -28,8 +28,8 @@ namespace Pegaucho.Shared.Entities
 
         [Display(Name = "Costo Unitario del Producto")]
         [Required]
-        [MaxLength(100)]
-        public decimal CostoUnitario { get; set; }
+        [Range(0, double.MaxValue, ErrorMessage = "El costo unitario debe ser un número positivo.")]
+        public double CostoUnitario { get; set; }
 
 }
 }
