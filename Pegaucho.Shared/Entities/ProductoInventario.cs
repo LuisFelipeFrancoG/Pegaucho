@@ -29,7 +29,7 @@ namespace Pegaucho.Shared.Entities
         [Display(Name = "Costo Unitario del Producto")]
         [Required]
         [MaxLength(100)]
-        public double CostoUnitario { get; set; }
+        public decimal CostoUnitario { get; set; }
 
 }
 }
