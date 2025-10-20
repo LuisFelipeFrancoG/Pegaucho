@@ -31,5 +31,10 @@ namespace Pegaucho.Shared.Entities
         [Range(0, double.MaxValue, ErrorMessage = "El costo unitario debe ser un número positivo.")]
         public double CostoUnitario { get; set; }
 
-}
+        [Display(Name = "Unidad de Medida del Producto")]
+        [Required]
+        [MaxLength(10)]
+        protected TipoProducto tipo { get; set; }
+
+    }
 }
